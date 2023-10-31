@@ -15,3 +15,6 @@ Este projeto consiste em um sistema de gerenciamento de filmes, desenvolvido em 
 
 - Java Swing
 - MySQL
+- Java Maven
+- JPA
+- Hibernate
