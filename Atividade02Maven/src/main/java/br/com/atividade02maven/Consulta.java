@@ -48,6 +48,12 @@ public class Consulta extends javax.swing.JFrame {
 
         jLabel1.setText("Nome do Filme :");
 
+        NomeFilmePesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NomeFilmePesquisaActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Data de Lançamento :");
 
         jLabel3.setText("Categoria :");
@@ -66,7 +72,7 @@ public class Consulta extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Id","Nome", "Data Lançamento", "Categoria"
+                "Nome", "Data Lançamento", "Categoria"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -201,12 +207,22 @@ public class Consulta extends javax.swing.JFrame {
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
         try {
-            FilmesDao filmesDao = new FilmesDao();
-            List<Filmes> filmes = filmesDao.listar();
+        String nome = NomeFilmePesquisa.getText(); // Obtém o valor digitado no campo de texto Nome do Filme
+        String dataLancamento = DataLancamentoPesquisa.getText(); // Obtém o valor digitado no campo de texto Data de Lançamento
+        String categoria = CategoriaPesquisa.getText(); // Obtém o valor digitado no campo de texto Categoria
+
+        FilmesDao filmesDao = new FilmesDao();
+
+        // Verifica se pelo menos um dos campos de filtro foi preenchido
+        if (!nome.isEmpty() || !dataLancamento.isEmpty() || !categoria.isEmpty()) {
+            List<Filmes> filmes = filmesDao.buscarPorFiltros(nome, dataLancamento, categoria);
             preencheTabela(filmes);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha:\n" + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(this, "Preencha pelo menos um campo de filtro.");
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Ocorreu uma falha:\n" + e.getMessage());
+    }
     }
 
     private void preencheTabela(List<Filmes> filmes) {
@@ -287,6 +303,10 @@ public class Consulta extends javax.swing.JFrame {
     }
 
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void NomeFilmePesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomeFilmePesquisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NomeFilmePesquisaActionPerformed
 
     /**
      * @param args the command line arguments

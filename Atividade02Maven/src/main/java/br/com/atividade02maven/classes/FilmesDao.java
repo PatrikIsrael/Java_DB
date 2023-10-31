@@ -4,7 +4,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FilmesDao {
 
@@ -67,16 +69,41 @@ public class FilmesDao {
         }
     }
 
-    public List<Filmes> buscarPorNome(String nome) {
-        try {
-            Query query = em.createQuery("SELECT f FROM Filmes f WHERE f.nome LIKE :nome");
-            query.setParameter("nome", "%" + nome + "%");
-            return query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+public List<Filmes> buscarPorFiltros(String nome, String dataLancamento, String categoria) {
+    try {
+        String jpql = "SELECT f FROM Filmes f WHERE 1=1";
+        Map<String, Object> parametros = new HashMap<>();
+
+        if (nome != null && !nome.isEmpty()) {
+            jpql += " AND f.nome LIKE :nome";
+            parametros.put("nome", "%" + nome + "%");
         }
+
+        if (dataLancamento != null && !dataLancamento.isEmpty()) {
+          
+            jpql += " AND f.dataLancamento = :dataLancamento";
+            parametros.put("dataLancamento", dataLancamento);
+        }
+
+        if (categoria != null && !categoria.isEmpty()) {
+            jpql += " AND f.categoria = :categoria";
+            parametros.put("categoria", categoria);
+        }
+
+        Query query = em.createQuery(jpql);
+
+        for (Map.Entry<String, Object> entry : parametros.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
     }
+}
+
+
 
  public void excluirPorNome(String nome) {
     EntityManager em = JPAUtil.getEntityManager();
