@@ -3,13 +3,18 @@ Este projeto consiste em um sistema de gerenciamento de filmes, desenvolvido em 
 
 ## Funcionalidades Principais
 
-- Cadastro de Filmes: Permite aos usuários adicionar novos filmes ao sistema, fornecendo informações como título, gênero, ano de lançamento, etc.
+- Cadastro de Podcasts: Permite aos usuários adicionar novos podcasts ao sistema, fornecendo informações como título, descrição, gênero, episódios, etc.
 
-- Atualização de Dados: Possibilita a edição e atualização de informações sobre filmes já cadastrados.
+- Atualização de Dados: Possibilita a edição e atualização de informações sobre podcasts já cadastrados.
 
-- Exclusão de Filmes: Permite a remoção de filmes do banco de dados.
+- Exclusão de Podcasts: Permite a remoção de podcasts do banco de dados.
 
-- Restrições de Usuário no Banco de Dados: Implementa medidas de segurança no banco de dados, garantindo que apenas usuários autorizados possam realizar operações.
+- Autenticação de Usuário: Implementa um sistema de autenticação, onde os usuários precisam fazer login para acessar o sistema. Existem três tipos de usuários:
+
+Admin: Tem permissões totais (cadastro, atualização e exclusão de podcasts).
+Dev: Tem permissões totais (cadastro, atualização e exclusão de podcasts).
+Usuário: Pode apenas consultar os podcasts.
+Restrições de Usuário no Banco de Dados: Garante que apenas usuários autorizados possam realizar operações no banco de dados.
 
 ## Tecnologias Utilizadas
 
